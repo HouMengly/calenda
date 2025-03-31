@@ -3,6 +3,7 @@ import {Kantumruy_Pro } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { FontSizeProvider } from '@/components/FontSizeContext';
 
 const kantumruy = Kantumruy_Pro({
   variable: "--font-kantumruy-pro",
@@ -20,14 +21,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (<html lang="en">
-    <body className={`flex flex-col min-h-screen ${kantumruy.variable} antialiased`}>
-      <Navbar />
-      
-      {/* Middle content fills available space dynamically */}
-      <div className="flex-1 mb-10">{children}</div>
-      
-      <Footer />
-    </body>
+    <FontSizeProvider>
+      <body className={`flex flex-col min-h-screen ${kantumruy.variable} antialiased`}>
+        <Navbar />
+        
+        {/* Middle content fills available space dynamically */}
+        <div className="flex-1 mb-10">{children}</div>
+        
+        <Footer />
+      </body>
+    </FontSizeProvider>
   </html>
   
   );

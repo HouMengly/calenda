@@ -18,7 +18,7 @@ const Footer = () => {
         <Image src="/images/cdc News-logo-v1.png" alt="Logo" width={50} height={50} />
       </div>
       <div className="marquee flex items-center text-amber-50">
-        <span className="marquee-text text-lg whitespace-nowrap">
+        <span className="marquee-text text-2xl whitespace-nowrap">
         ខ្លីៗអំពីគម្រោងវិនិយោគដែលបានអនុម័តដោយ ក្រុមប្រឹក្សាអភិវឌ្ឍន៍កម្ពុជា ក្នុងខែកុម្ភៈ ឆ្នាំ២០២៥ 
         | គម្រោងវិនិយោគសរុប៖ ៤៤គម្រោង ទុនវិនិយោគសរុប៖ ប្រមាណ ៣២១លានដុល្លារអាម៉េរិក 
         | បង្កើតការងារបាន៖ ប្រមាណ ២៥ពាន់កន្លែង​ 
