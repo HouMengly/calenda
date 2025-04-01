@@ -13,7 +13,6 @@ const kantumruy = Kantumruy_Pro({
 
 export default function Setting({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const { fontSize, setFontSize } = useFontSize();
-  const [inputValue, setInputValue] = useState("LCD");
 
   const handleSubmit = () => {
     onClose();
@@ -38,10 +37,10 @@ export default function Setting({ isOpen, onClose }: { isOpen: boolean; onClose:
                 value={fontSize}
                 onChange={(e) => setFontSize(e.target.value)}
               >
-                <option value="XL">XL</option>
                 <option value="2XL">2XL</option>
                 <option value="3XL">3XL</option>
                 <option value="4XL">4XL</option>
+                <option value="5XL">5XL</option>
               </select>
               <Icon icon="ic:sharp-arrow-drop-down" width="24" height="24" className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer" />
             </div>

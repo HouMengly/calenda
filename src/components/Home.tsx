@@ -78,12 +78,12 @@ const kantumruy = Kantumruy_Pro({
 const Home: React.FC<any> = () => {
 
   //// Create size classes mapping
-  const { fontSize } = useFontSize() as { fontSize: 'XL' | '2XL' | '3XL' | '4XL' };
-  const sizeClasses: Record<'XL' | '2XL' | '3XL' | '4XL', string> = {
-    'XL': 'text-xl',
+  const { fontSize } = useFontSize() as { fontSize:'2XL' | '3XL' | '4XL' | '5XL' };
+  const sizeClasses: Record<'2XL' | '3XL' | '4XL' | '5XL', string> = {
     '2XL': 'text-2xl',
     '3XL': 'text-3xl',
     '4XL': 'text-4xl',
+    '5XL': 'text-5xl',
   };
 
   const [schedules, setSchedules] = useState<Schedule[]>([]);

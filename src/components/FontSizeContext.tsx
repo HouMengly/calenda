@@ -1,7 +1,7 @@
 // contexts/FontSizeContext.tsx
 "use client";
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface FontSizeContextType {
   fontSize: string;
@@ -9,12 +9,26 @@ interface FontSizeContextType {
 }
 
 const FontSizeContext = createContext<FontSizeContextType>({
-  fontSize: 'XL',
+  fontSize: '2XL',
   setFontSize: () => {},
 });
 
 export const FontSizeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [fontSize, setFontSize] = useState('XL');
+  const [fontSize, setFontSize] = useState('2XL'); // Default value for SSR
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    const savedFontSize = localStorage.getItem('fontSize');
+    if (savedFontSize) {
+      setFontSize(savedFontSize);
+    }
+  }, []);
+  useEffect(() => {
+    if (isMounted) {
+      localStorage.setItem('fontSize', fontSize);
+    }
+  }, [fontSize, isMounted]);
   
   return (
     <FontSizeContext.Provider value={{ fontSize, setFontSize }}>
