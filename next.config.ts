@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  devIndicators: false,
+  output: "standalone",
+  devIndicators: {
+    buildActivity: false,
+  },
 };
 
 export default nextConfig;
-
