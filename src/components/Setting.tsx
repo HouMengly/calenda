@@ -33,14 +33,14 @@ export default function Setting({ isOpen, onClose }: { isOpen: boolean; onClose:
             <label className="block text-gray-600 text-xl">ទំហំអក្សរ</label>
             <div className="relative">
               <select
-                className="w-full border border-gray-300 rounded-xl p-2 mt-1 h-15 appearance-none cursor-pointer"
+                className="w-full border border-gray-300 rounded-xl p-2 mt-1 h-15 appearance-none cursor-pointer text-xl"
                 value={fontSize}
                 onChange={(e) => setFontSize(e.target.value)}
               >
-                <option value="2XL">2XL</option>
-                <option value="3XL">3XL</option>
-                <option value="4XL">4XL</option>
-                <option value="5XL">5XL</option>
+                <option value="2XL">តូច</option>
+                <option value="3XL">មធ្យម</option>
+                <option value="4XL">ធំ</option>
+                <option value="5XL">ធំជាងគេ</option>
               </select>
               <Icon icon="ic:sharp-arrow-drop-down" width="24" height="24" className="absolute right-4 top-1/2 transform -translate-y-1/2 cursor-pointer" />
             </div>
