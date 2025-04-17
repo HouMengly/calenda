@@ -116,7 +116,7 @@ const Home: React.FC<any> = () => {
                         </span>
                       ))}
 
-                    {/* Show non-leader avatars, up to 10 */}
+                    {/* Show avatars up to 10 */}
                     {schedule.meeting_participants
                       .filter((p) => p.participantType.en_name !== "Leader")
                       .slice(0, 10)
