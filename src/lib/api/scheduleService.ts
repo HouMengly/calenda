@@ -1,5 +1,14 @@
 import { Schedule } from "../types/schedule";
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+interface ApiResponse {
+  statusCode: number;
+  success: boolean;
+  data: Schedule[];
+  message: string;
+  meta: {
+    timestamp: string;
+  };
+}
 
 export const fetchSchedules = async (): Promise<Schedule[]> => {
   try {
@@ -10,10 +19,14 @@ export const fetchSchedules = async (): Promise<Schedule[]> => {
       const errorData = await res.json().catch(() => ({}));
       throw new Error(errorData.message || `HTTP error! status: ${res.status}`);
     }
-    const data = await res.json();
-    return data;
+    const result: ApiResponse = await res.json();
+    
+    if (!Array.isArray(result.data)) {
+      throw new Error('Expected array in response.data');
+    }
+    return result.data;
   } catch (error) {
-    console.error("Error details:", {error});
+    console.error("Failed to fetch schedules:", error instanceof Error ? error.message : error);
     return [];
   }
 };

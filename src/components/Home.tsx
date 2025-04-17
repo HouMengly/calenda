@@ -7,78 +7,17 @@ import { Kantumruy_Pro } from "next/font/google";
 import React, { useEffect, useState } from "react";
 import { useFontSize } from "./FontSizeContext";
 
-//   {
-//     date: "07",
-//     time: "08:30 - 09:30",
-//     location: "DPM Office",
-//     title:"ទទួលជួបមន្ត្រីបាលីហិតក្លឹប Cherdkiat ATTHAKOR ជាកិច្ចពិភាក្សាការងារ និងកិច្ចសហប្រតិបត្តិការ ផ្នែកការអភិវឌ្ឍន៍",
-//     attendees: ["ឯកឧត្តម ស៊ុម ចានថុល"],
-//     status: "upcoming",
-//   },
-//   {
-//     date: "07",
-//     time: "10:00 - 11:00",
-//     location: "CIB Meeting Room",
-//     title: "ជួបពិភាក្សាជាមួយលោក William Fong",
-//     titleEn: "Meeting with Mr. William Fong",
-//     attendees: ["ឯកឧត្តម ស៊ុម ចានថុល"],
-//     status: "ongoing",
-//   },
-//   {
-//     date: "07",
-//     time: "14:30 - 15:30",
-//     location: "CDC Hall",
-//     title: "កិច្ចប្រជុំពិភាក្សាការងារជាមួយក្រុមហ៊ុន BYD AUTO",
-//     titleEn: "Work discussion meeting with BYD AUTO",
-//     attendees: ["ឯកឧត្តម ស៊ុម ចានថុល"],
-//     status: "move to",
-//   },
-//   {
-//     date: "07",
-//     time: "14:30 - 15:30",
-//     location: "CDC Hall",
-//     title: "កិច្ចប្រជុំពិភាក្សាការងារជាមួយក្រុមហ៊ុន BYD AUTO",
-//     titleEn: "Work discussion meeting with BYD AUTO",
-//     attendees: ["ឯកឧត្តម ស៊ុម ចានថុល"],
-//     status: "null",
-//   },
-//   {
-//     date: "07",
-//     time: "10:00 - 11:00",
-//     location: "CIB Meeting Room",
-//     title: "ជួបពិភាក្សាជាមួយលោក William Fong",
-//     titleEn: "Meeting with Mr. William Fong",
-//     attendees: ["ឯកឧត្តម ស៊ុម ចានថុល"],
-//     status: "ongoing",
-//   },
-//   {
-//     date: "07",
-//     time: "14:30 - 15:30",
-//     location: "CDC Hall",
-//     title: "កិច្ចប្រជុំពិភាក្សាការងារជាមួយក្រុមហ៊ុន BYD AUTO",
-//     titleEn: "Work discussion meeting with BYD AUTO",
-//     attendees: ["ឯកឧត្តម ស៊ុម ចានថុល"],
-//     status: "move to",
-//   },
-//   {
-//     date: "07",
-//     time: "14:30 - 15:30",
-//     location: "CDC Hall",
-//     title: "កិច្ចប្រជុំពិភាក្សាការងារជាមួយក្រុមហ៊ុន BYD AUTO",
-//     titleEn: "Work discussion meeting with BYD AUTO",
-//     attendees: ["ឯកឧត្តម ស៊ុម ចានថុល"],
-//     status: "null",
-//   },
-// ];
 const kantumruy = Kantumruy_Pro({
     subsets: ["khmer", "latin"],
     weight: ["300", "400", "700"],
   });
 
 const Home: React.FC<any> = () => {
-
-  //// Create size classes mapping
   const { fontSize } = useFontSize() as { fontSize:'2XL' | '3XL' | '4XL' | '5XL' };
+  const [schedules, setSchedules] = useState<Schedule[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const sizeClasses: Record<'2XL' | '3XL' | '4XL' | '5XL', string> = {
     '2XL': 'text-2xl',
     '3XL': 'text-3xl',
@@ -86,24 +25,34 @@ const Home: React.FC<any> = () => {
     '5XL': 'text-5xl',
   };
 
-  const [schedules, setSchedules] = useState<Schedule[]>([]);
-  
   useEffect(() => {
-    const loadData = async () => {
-      const data = await fetchSchedules();
-      console.log("Loaded data:", data);
-      setSchedules(data);
+    const loadSchedules = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchSchedules();
+        setSchedules(data);
+      } catch (err) {
+        setError('Failed to load schedules');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
-    
-    loadData();
+
+    loadSchedules();
   }, []);
+
+  if (loading) return <div>Loading schedules...</div>;
+  if (error) return <div>{error}</div>;
+  if (schedules.length === 0) return <div>No schedules found</div>;
 
   return (
     <div className={`mx-auto px-16 py-8 w-full h-100% ${kantumruy.className} ${sizeClasses[fontSize]}`}>
       <div className="space-y-3">
-        {schedules.map((schedule, index) => (  // Changed from data to schedules
+        {Array.isArray(schedules) &&  schedules.map((schedule, index) => ( 
           <div key={index} className="border border-amber-50 rounded-lg p-6">
             <div className="grid grid-cols-24 gap-6">
+
               {/* Date Section */}
               <div className="col-span-2 text-center border-r border-amber-50 pr-6">
                 <div className="text-gray-300 mt-1 mb-2">
@@ -153,13 +102,46 @@ const Home: React.FC<any> = () => {
                   </h3>
                 </div>
                 
+                {/* participant */}
                 <div className="flex items-start text-gray-400 pt-2">
                   <Icon icon="mdi:account-star-outline" width="32" height="32" />
-                  <span className="pt-2 pl-4">
+                  <div className="pl-4 flex gap-2 flex-wrap items-center">
+
+                    {/* Show leaders by name */}
                     {schedule.meeting_participants
-                      .map(p => p.user.kh_name)
-                      .join(", ")}
-                  </span>
+                      .filter((p) => p.participantType.en_name === "Leader")
+                      .map((p, idx) => (
+                        <span key={`leader-${idx}`} className="text-gray-400 pr-5">
+                          {p.user.kh_name}
+                        </span>
+                      ))}
+
+                    {/* Show avatars up to 10 */}
+                    {schedule.meeting_participants
+                      .filter((p) => p.participantType.en_name !== "Leader")
+                      .slice(0, 10)
+                      .map((p, idx) => (
+                        <img
+                          key={`avatar-${idx}`}
+                          src={p.user.avatar}
+                          alt={p.user.kh_name}
+                          className="w-10 h-10 rounded-full border ml-[-15]"
+                          title={p.user.kh_name}
+                        />
+                      ))}
+
+                    {/* Show +N avatar if more than 10 non-leaders */}
+                    {(() => {
+                      const extraCount = schedule.meeting_participants.filter(
+                        (p) => p.participantType.en_name !== "Leader"
+                      ).length - 10;
+                      return extraCount > 0 ? (
+                        <div className="w-10 h-10 rounded-full border bg-gray-600 text-white flex items-center justify-center text-xs ml-[-15]">
+                          +{extraCount}
+                        </div>
+                      ) : null;
+                    })()}
+                  </div>
                 </div>
               </div>
             </div>
