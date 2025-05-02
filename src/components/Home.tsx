@@ -38,7 +38,6 @@ const Home: React.FC<any> = () => {
         setLoading(false);
       }
     };
-
     loadSchedules();
   }, []);
 
