@@ -65,7 +65,7 @@ const Home: React.FC<any> = () => {
                   {schedule.day_of_week === "Sunday" && "អាទិត្យ"}
                 </div>
                 <div className="text-6xl text-white">
-                  {new Date(schedule.meeting_date).getDate().toString().padStart(2, '0')}
+                  {new Date(schedule.meeting_start_date).getDate().toString().padStart(2, '0')}
                 </div>
               </div>
 

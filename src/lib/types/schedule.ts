@@ -1,7 +1,7 @@
 export interface Schedule {
   id: number;
   agenda: string;
-  meeting_date: string;
+  meeting_start_date: string;
   start_time: string;
   end_time: string;
   day_of_week: string;
