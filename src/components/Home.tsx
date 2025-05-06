@@ -8,12 +8,12 @@ import React, { useEffect, useState } from "react";
 import { useFontSize } from "./FontSizeContext";
 
 const kantumruy = Kantumruy_Pro({
-    subsets: ["khmer", "latin"],
-    weight: ["300", "400", "700"],
-  });
+  subsets: ["khmer", "latin"],
+  weight: ["300", "400", "700"],
+});
 
-const Home: React.FC<any> = () => {
-  const { fontSize } = useFontSize() as { fontSize:'2XL' | '3XL' | '4XL' | '5XL' };
+const Home: React.FC<{ lcd_id: string }> = ({ lcd_id }) => {
+  const { fontSize } = useFontSize() as { fontSize: '2XL' | '3XL' | '4XL' | '5XL' };
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -26,10 +26,16 @@ const Home: React.FC<any> = () => {
   };
 
   useEffect(() => {
+    if (!lcd_id) {
+      setError("LCD ID is required.");
+      setLoading(false);
+      return;
+    }
+  
     const loadSchedules = async () => {
       try {
         setLoading(true);
-        const data = await fetchSchedules();
+        const data = await fetchSchedules(lcd_id);
         setSchedules(data);
       } catch (err) {
         setError('Failed to load schedules');
@@ -38,9 +44,8 @@ const Home: React.FC<any> = () => {
         setLoading(false);
       }
     };
-
     loadSchedules();
-  }, []);
+  }, [lcd_id]);
 
   if (loading) return <div>Loading schedules...</div>;
   if (error) return <div>{error}</div>;
@@ -49,7 +54,7 @@ const Home: React.FC<any> = () => {
   return (
     <div className={`mx-auto px-16 py-8 w-full h-100% ${kantumruy.className} ${sizeClasses[fontSize]}`}>
       <div className="space-y-3">
-        {Array.isArray(schedules) &&  schedules.map((schedule, index) => ( 
+        {Array.isArray(schedules) && schedules.map((schedule, index) => (
           <div key={index} className="border border-amber-50 rounded-lg p-6">
             <div className="grid grid-cols-24 gap-6">
 
@@ -65,7 +70,7 @@ const Home: React.FC<any> = () => {
                   {schedule.day_of_week === "Sunday" && "អាទិត្យ"}
                 </div>
                 <div className="text-6xl text-white">
-                  {new Date(schedule.meeting_date).getDate().toString().padStart(2, '0')}
+                  {new Date(schedule.meeting_start_date).getDate().toString().padStart(2, '0')}
                 </div>
               </div>
 
@@ -91,34 +96,34 @@ const Home: React.FC<any> = () => {
               <div className="flex flex-col col-span-16 space-x-3">
                 <div className="flex-shrink-0 flex space-x-3">
                   <div
-                    className={`flex items-center justify-center mt-1.25 ${
-                      schedule.meeting_status.en_name === "Pending" 
+                    className={`flex items-center justify-center mt-1.25 ${schedule.meeting_status.en_name === "Pending"
                         ? "w-8 h-8 rounded-full animate-pulseColor"
                         : "w-8 h-8 rounded-full status-upcoming"
-                    }`}
+                      }`}
                   />
                   <h3 className={`text-white pt-2 ${sizeClasses[fontSize]}`}>
                     {schedule.agenda}
                   </h3>
                 </div>
-                
+
                 {/* participant */}
                 <div className="flex items-start text-gray-400 pt-2">
                   <Icon icon="mdi:account-star-outline" width="32" height="32" />
                   <div className="pl-4 flex gap-2 flex-wrap items-center">
-
-                    {/* Show leaders by name */}
+                    {/* Show invited leaders by name */}
                     {schedule.meeting_participants
-                      .filter((p) => p.participantType.en_name === "Leader")
+                      .filter((p) => p.participantType.en_name === "Leader" && p.is_invited)
                       .map((p, idx) => (
                         <span key={`leader-${idx}`} className="text-gray-400 pr-5">
                           {p.user.kh_name}
                         </span>
                       ))}
 
-                    {/* Show avatars up to 10 */}
+                    {/* Show invited avatars up to 10 */}
                     {schedule.meeting_participants
-                      .filter((p) => p.participantType.en_name !== "Leader")
+                      .filter(
+                        (p) => p.participantType.en_name !== "Leader" && p.is_invited
+                      )
                       .slice(0, 10)
                       .map((p, idx) => (
                         <img
@@ -130,11 +135,12 @@ const Home: React.FC<any> = () => {
                         />
                       ))}
 
-                    {/* Show +N avatar if more than 10 non-leaders */}
+                    {/* Show +N avatar if more than 10 invited non-leaders */}
                     {(() => {
-                      const extraCount = schedule.meeting_participants.filter(
-                        (p) => p.participantType.en_name !== "Leader"
-                      ).length - 10;
+                      const extraCount =
+                        schedule.meeting_participants.filter(
+                          (p) => p.participantType.en_name !== "Leader" && p.is_invited
+                        ).length - 10;
                       return extraCount > 0 ? (
                         <div className="w-10 h-10 rounded-full border bg-gray-600 text-white flex items-center justify-center text-xs ml-[-15]">
                           +{extraCount}
