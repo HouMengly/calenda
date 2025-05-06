@@ -1,6 +1,11 @@
-import Home from "@/components/Home";
+import InputLCDId from "@/components/InputLCDId";
 
-
-export default function HomePage() {
-  return <Home />;
+const Home: React.FC = () => {
+  return (
+    <div>
+      <InputLCDId />
+    </div>
+  );
 };
+
+export default Home;

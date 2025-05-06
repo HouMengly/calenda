@@ -16,22 +16,29 @@ export interface Schedule {
     kh_name: string;
     en_name: string;
   };
-  meeting_halls:{
+  meeting_halls: {
     id: number;
     kh_name: string;
     en_name: string;
   };
-  meeting_participants:{
+  meeting_participants: {
     id: number;
     is_invited: boolean;
     user: {
       id: number;
       kh_name: string;
+      en_name: string;
       avatar: string;
     };
     participantType: {
       id: number;
+      kh_name: string;
       en_name: string;
     };
   }[];
-}  
+  description?: string;
+  created_at?: string;
+  updated_at?: string;
+  is_recurring?: boolean;
+  recurrence_pattern?: string;
+}
