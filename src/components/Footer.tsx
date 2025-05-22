@@ -1,6 +1,5 @@
 "use client";
 
-import { BiNews } from "react-icons/bi";
 import React from "react";
 import { Kantumruy_Pro } from "next/font/google";
 import Image from "next/image";
