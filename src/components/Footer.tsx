@@ -12,7 +12,7 @@ const Footer = () => {
 
   
   return (
-    <footer className={` footer absolute bottom-0 w-full bg-[rgba(58,62,139,0.43)] flex items-center overflow-hidden ${kantumruy.className}`}>
+    <footer className={` footer absolute bottom-0 w-full bg-[rgba(58,62,139,0.74)] flex items-center overflow-hidden ${kantumruy.className}`}>
       <div className="flex bg-blue-900 items-center justify-center w-20% h-20% p-2">
         <Image src="/images/cdc News-logo-v1.png" alt="Logo" width={50} height={50} />
       </div>

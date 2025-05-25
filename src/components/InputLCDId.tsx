@@ -20,7 +20,7 @@ const InputLCDId: React.FC = () => {
             setError("សូមបញ្ចូលលេខសម្គាល់ LCD ឱ្យបានត្រឹមត្រូវ!");
             return;
         }
-        console.log("Navigating to /home/" + lcdId);
+        localStorage.setItem("lcdId", lcdId);
         router.push(`/lcd/${lcdId}`);
     };
 

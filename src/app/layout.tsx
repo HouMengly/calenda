@@ -25,10 +25,13 @@ export default function RootLayout({
       <body className={`flex flex-col min-h-screen ${kantumruy.variable} antialiased`}>
         <Navbar />
         
-        {/* Middle content fills available space dynamically */}
-        <div className="flex-1 mb-10">{children}</div>
-        
-        <Footer />
+        {/* Middle content fills available space */}
+          <div className="flex-1 mb-6">{children}</div>
+          
+          {/* Sticky footer */}
+          <div className="sticky bottom-0">
+            <Footer />
+          </div>
       </body>
     </FontSizeProvider>
   </html>
