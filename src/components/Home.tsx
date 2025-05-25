@@ -7,6 +7,7 @@ import { Kantumruy_Pro } from "next/font/google"
 import type React from "react"
 import { useEffect, useState } from "react"
 import { useFontSize } from "./FontSizeContext"
+import Image from "next/image"
 
 const kantumruy = Kantumruy_Pro({
   subsets: ["khmer", "latin"],
@@ -141,9 +142,11 @@ const Home: React.FC<{ lcd_id: string }> = ({ lcd_id }) => {
                       {/* Show invited avatars up to 10 */}
                       <div className="flex -space-x-4">
                         {schedule.meeting_participants.slice(0, 10).map((p, idx) => (
-                          <img
+                          <Image
                             key={`avatar-${idx}`}
-                            src={p.user.avatar || "/placeholder.svg?height=40&width=40"}
+                            width={40}
+                            height={40}
+                            src= "https://file-v4-api.uat.camcyber.com/static/avatar.png"
                             alt={p.user.kh_name}
                             className="w-10 h-10 rounded-full border"
                             title={p.user.kh_name}
