@@ -122,48 +122,23 @@ export default function Navbar() {
       <header className={`flex py-6 px-4 xl:px-6 items-center relative ${kantumruy.className}`}>
         {/* Left Side - Logo */}
         <div className="flex items-center mr-auto">
-          <div className="w-16 xl:w-[100px]">
+          <div className="w-16 xl:w-[100px] mr-2">
             <Link href="/" className={pathname === "/" ? activeLink : inactiveLink} onClick={() => setActiveTab("/")}>
               <Image
                 src="/images/Gold_CDC_logo_V4.png"
                 alt="CDC Logo"
                 width={80}
                 height={80}
-                className="w-12 h-12 xl:w-20 xl:h-20"
+                className="w-16 h-16 xl:w-20 xl:h-20"
               />
             </Link>
           </div>
           <Link href="/" className={pathname === "/" ? activeLink : inactiveLink} onClick={() => setActiveTab("/")}>
             <div className="flex flex-col items-center text-[#CFA501]">
               <p className="text-3xl pb-2.5">ក្រុមប្រឹក្សាអភិវឌ្ឍន៍កម្ពុជា</p>
-              <p className="upline-text text-base">Council for the Development of Cambodia</p>
+              <p className="upline-text text-sm">Council for the Development of Cambodia</p>
             </div>
           </Link>
-        </div>
-
-        {/* Center - Navigation */}
-        <div className="flex flex-col items-center pt-6 xl:pt-10 absolute left-1/2 transform -translate-x-1/2">
-          <span className="p-4 text-4xl text-white text-center">
-            {pathname.startsWith("/lcd") ? "ព័ត៍មានកិច្ចប្រជំុ" : "ថ្មីៗពី ក.អ.ក"}
-          </span>
-          <div className="flex space-x-2">
-            {lcdId && (
-              <Link
-                href={`/lcd/${lcdId}`}
-                className={pathname.startsWith("/lcd") ? activeLink : inactiveLink}
-                onClick={() => setActiveTab(`/lcd/${lcdId}`)}
-              >
-                <Icon icon="mdi:calendar-badge" width="28" height="28" className="xl:w-8 xl:h-8" />
-              </Link>
-            )}
-            <Link
-              href="/slider"
-              className={pathname === "/slider" ? activeLink : inactiveLink}
-              onClick={() => setActiveTab("/slider")}
-            >
-              <Icon icon="mdi:insert-photo" width="28" height="28" className="xl:w-8 xl:h-8" />
-            </Link>
-          </div>
         </div>
 
         {/* Right Side - Date & Time */}

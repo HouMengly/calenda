@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { FontSizeProvider } from '@/components/FontSizeContext';
+import DashboardSection from "@/components/StackChart";
 
 const kantumruy = Kantumruy_Pro({
   variable: "--font-kantumruy-pro",
@@ -23,7 +24,10 @@ export default function RootLayout({
   return (<html lang="en">
     <FontSizeProvider>
       <body className={`flex flex-col min-h-screen ${kantumruy.variable} antialiased`}>
-        <Navbar />
+        
+        <div className="sticky top-0">
+            <Navbar />
+        </div>
         
         {/* Middle content fills available space */}
           <div className="flex-1 mb-6">{children}</div>
