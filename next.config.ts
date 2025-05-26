@@ -6,14 +6,18 @@ const nextConfig: NextConfig = {
     buildActivity: false,
   },
   images: {
-    domains: ['file-v4-api.uat.camcyber.com'],
-    // or if you're using Next.js 13+ with remotePatterns:
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'file-v4-api.uat.camcyber.com',
+        hostname: 'file.cdc.gov.kh',
         port: '',
-        pathname: '/static/**',
+        pathname: '/upload/file/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'file.uat.cdc.gov.kh', // Second hostname
+        port: '',
+        pathname: '/upload/file/**',
       },
     ],
   },

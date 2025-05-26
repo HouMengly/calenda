@@ -147,7 +147,7 @@ export default function DashboardSection({
                         <div ref={chartRef} className="w-full h-72" />
                         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                             <div className="text-white text-4xl font-bold">{totalMembers}</div>
-                            <div className="text-white text-xl">កំណត់ប្រមូលផ្ដុំ</div>
+                            <div className="text-white text-xl">កំពុងធ្វើការ</div>
                         </div>
                         <div className="flex flex-wrap justify-center gap-4 mb-9">
                             {allChartData.map((item, index) => (
