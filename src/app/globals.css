@@ -36,3 +36,13 @@ body::after {
 [data-nextjs-devtools-button] {
   display: none !important;
 }
+
+/* Hide scrollbars across all browsers */
+.custom-scroll {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.custom-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
