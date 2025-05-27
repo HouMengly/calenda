@@ -17,7 +17,7 @@ export default function Error({ error, reset }: ErrorProps) {
   }, [error])
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+    <div className="flex flex-col items-center justify-center p-4">
       <div className="max-w-md w-full bg-red-50 border border-red-200 rounded-lg p-6">
         <h2 className="text-2xl font-bold text-red-800 mb-4">
           Something went wrong!
